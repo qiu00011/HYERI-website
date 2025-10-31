@@ -387,8 +387,10 @@
             .balloons, .balloons-right { font-size: 20px; }
         }
 
+        /* --- 数码倒计时和星星动画样式 --- */
         @font-face {
             font-family: 'Digital';
+            /* 使用系统等宽字体模拟 */
             src: local('Consolas'), local('Monospace'); 
         }
 
@@ -398,12 +400,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background:
-                radial-gradient(ellipse 70% 45% at 25% 75%, rgba(138, 43, 226, 0.7) 0%, rgba(75, 0, 130, 0.4) 50%, transparent 100%),
-                radial-gradient(ellipse 60% 35% at 75% 25%, rgba(147, 112, 219, 0.6) 0%, rgba(106, 90, 205, 0.3) 50%, transparent 100%),
-                radial-gradient(circle at 45% 55%, rgba(255, 255, 255, 0.12) 0%, transparent 60%),
-                radial-gradient(circle at 60% 40%, rgba(255, 182, 193, 0.08) 0%, transparent 70%),
-                radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            /* === [NEW] 1. 更换为星空背景 === */
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%); /* Deep space blue */
             color: #ff69b4;
             display: flex;
             flex-direction: column;
@@ -413,46 +411,9 @@
             z-index: 20000;
             transition: opacity 1s ease-out;
             padding: 20px; 
-            overflow: hidden;
-            animation: galaxyFlow 25s linear infinite, galaxyTwinkle 4s ease-in-out infinite;
+            overflow: hidden; /* 隐藏溢出 */
         }
-
-        @keyframes galaxyFlow {
-            0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
-            100% { background-position: 100% 100%, 100% -100%, 100% 100%, -100% 100%, 0% 0%; }
-        }
-
-        @keyframes galaxyTwinkle {
-            0%, 100% { opacity: 0.95; }
-            50% { opacity: 1; }
-        }
-
-        #countdown-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: 
-                radial-gradient(1px 1px at 8% 12%, #fff 100%, transparent 0),
-                radial-gradient(1px 1px at 15% 78%, #ffd700 100%, transparent 0),
-                radial-gradient(2px 2px at 48% 22%, #fff 100%, transparent 0),
-                radial-gradient(1px 1px at 82% 58%, #ff69b4 100%, transparent 0),
-                radial-gradient(1px 1px at 92% 88%, #ffd700 100%, transparent 0),
-                radial-gradient(1px 1px at 35% 42%, #fff 100%, transparent 0),
-                radial-gradient(1px 1px at 65% 72%, #ff69b4 100%, transparent 0),
-                radial-gradient(1px 1px at 20% 30%, #ffd700 100%, transparent 0),
-                radial-gradient(2px 2px at 55% 85%, #fff 100%, transparent 0),
-                radial-gradient(1px 1px at 70% 15%, #ff69b4 100%, transparent 0);
-            animation: starsFlicker 3s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        @keyframes starsFlicker {
-            0%, 100% { opacity: 0.7; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.1); }
-        }
-
+        
         #countdown-wrapper.hidden {
             opacity: 0;
             pointer-events: none;
@@ -464,29 +425,24 @@
             color: #ffb3d9;
             margin-bottom: 30px;
             letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(255, 179, 217, 0.7);
-            z-index: 2;
         }
 
         .countdown-note {
             font-size: 20px;
             color: #fff;
             margin-top: 20px;
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
-            z-index: 2;
         }
 
         .countdown-display {
             font-family: 'Digital', 'Consolas', monospace;
-            font-size: clamp(32px, 10vw, 60px);
+            font-size: clamp(32px, 10vw, 60px); /* 自适应字体大小 */
             display: flex;
             gap: 15px;
             padding: 20px;
             border: 3px solid #ff69b4;
             border-radius: 10px;
             background-color: rgba(255, 105, 180, 0.1);
-            box-shadow: 0 0 25px rgba(255, 105, 180, 0.6);
-            z-index: 2;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
         }
 
         .time-group {
@@ -495,9 +451,8 @@
         }
 
         .time-value {
-            color: #ffd700;
+            color: #ffd700; /* 金色数码管效果 */
             padding: 0 5px;
-            text-shadow: 0 0 8px #ffd700, 0 0 15px #ff69b4;
         }
 
         .time-label {
@@ -507,109 +462,50 @@
             margin-top: 5px;
         }
 
+        /* === [NEW] 2. 星座布局 === */
+        
         #star-animation-container {
             width: 100%;
             text-align: center;
-            position: relative;
-            z-index: 2;
         }
 
         #stars-row {
-            position: relative;
-            width: 90%;
-            max-width: 500px;
-            height: 300px;
+            /* 移除旧的 flex 布局 */
+            position: relative; /* 关键：设为星座"画布" */
+            width: 90%; /* 响应式宽度 */
+            max-width: 500px; /* 最大宽度 */
+            height: 300px; /* 画布高度 */
             margin: 20px auto 0;
-            overflow: visible;
+            /* border: 1px dashed #555; */ /* (可选) 调试时打开，查看画布边界 */
         }
-
+        
         .animated-css-star {
-            width: 25px;
+            width: 25px; /* 星星大小 */
             height: 25px;
-            position: absolute;
-            opacity: 0;
-            transform: scale(0.3);
-            background: #ffd700;
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            filter: blur(1.5px);
-            transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+            position: absolute; /* 关键：绝对定位 */
+            opacity: 0.2; /* "关闭" 状态 */
+            animation: starGlow 1.5s infinite alternate ease-in-out;
         }
 
-        .animated-css-star.star-lit {
-            opacity: 1;
-            transform: scale(1.3) rotate(180deg);
-            filter: blur(0);
-            animation: starPulse 2.5s infinite alternate ease-in-out;
+        /* 星星发光动画 (保持不变, 效果很好) */
+        @keyframes starGlow {
+            0% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 5px #ffd700) drop-shadow(0 0 10px #ff69b4);
+            }
+            100% {
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 10px #ffd700) drop-shadow(0 0 15px #ff69b4);
+            }
         }
-
-        .animated-css-star.star-lit::before,
-        .animated-css-star.star-lit::after {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.9), transparent);
-        }
-
-        .animated-css-star.star-lit::before {
-            width: 45px; height: 45px;
-            animation: glowExpand 2s infinite ease-out;
-        }
-
-        .animated-css-star.star-lit::after {
-            width: 70px; height: 70px;
-            opacity: 0.4;
-            animation: glowExpand 2s infinite ease-out 0.6s;
-        }
-
-        @keyframes starPulse {
-            0% { transform: scale(1.1) rotate(180deg); filter: drop-shadow(0 0 6px #ffd700) brightness(1); }
-            100% { transform: scale(1.4) rotate(200deg); filter: drop-shadow(0 0 18px #ff69b4) brightness(1.8); }
-        }
-
-        @keyframes glowExpand {
-            0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.8; }
-            70% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.3; }
-            100% { transform: translate(-50%, -50%) scale(1.8); opacity: 0; }
-        }
-
-        #constellation-lines {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .constellation-line {
-            stroke: rgba(255, 215, 0, 0.3);
-            stroke-width: 1.5;
-            fill: none;
-            opacity: 0;
-            transition: opacity 0.8s ease, stroke 0.5s ease;
-        }
-
-        .constellation-line.active {
-            opacity: 1;
-            stroke: #ffd700;
-            filter: drop-shadow(0 0 4px #ffd700);
-            animation: linePulse 2s infinite ease-in-out;
-        }
-
-        @keyframes linePulse {
-            0%, 100% { stroke: #ffd700; stroke-width: 1.5; }
-            50% { stroke: #ff69b4; stroke-width: 2; }
-        }
-
+        
         #star-status {
             font-size: 24px;
             color: #98fb98;
             margin-bottom: 10px;
-            text-shadow: 0 0 12px rgba(152, 251, 152, 0.7);
-            z-index: 2;
         }
-
+        
+        /* --- [NEW] 星座位置 (20颗星) --- */
         .animated-css-star:nth-child(1) { top: 10%; left: 15%; }
         .animated-css-star:nth-child(2) { top: 20%; left: 30%; }
         .animated-css-star:nth-child(3) { top: 15%; left: 50%; }
@@ -630,7 +526,9 @@
         .animated-css-star:nth-child(18) { top: 90%; left: 60%; }
         .animated-css-star:nth-child(19) { top: 80%; left: 35%; }
         .animated-css-star:nth-child(20) { top: 95%; left: 10%; }
+        /* --- 动画样式结束 --- */
 
+        /* 确保主体内容在倒计时时隐藏 */
         #mainContent {
             display: none;
         }
@@ -644,7 +542,7 @@
         <div class="countdown-note">启动成功✅</div>
         <div id="star-animation-container" style="display: none; margin-top: 30px;">
             <div id="star-status">🥹这是一个特别的日子🎞️</div>
-            <div id="stars-row"><svg id="constellation-lines"></svg></div>
+            <div id="stars-row"></div>
         </div>
     </div>
     
