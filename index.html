@@ -1,208 +1,204 @@
-!DOCTYPE html
-html lang=zh-CN
-head
-    meta charset=UTF-8
-    meta name=viewport content=width=device-width, initial-scale=1.0
-    title阿欣羞羞o(▽)qtitle
-    style
-        {margin0;padding0;box-sizingborder-box;}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阿欣羞羞o(*////▽////*)q</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
         body{
-            font-family'KaiTi','楷体',serif;
-            backgroundlinear-gradient(135deg,#ffeef5,#ffb3d9);
-            min-height100vh;
-            displayflex;
-            justify-contentcenter;
-            align-itemscenter;
-            overflowhidden;
-            color#ff1493;
+            font-family:'KaiTi','楷体',serif;
+            background:linear-gradient(135deg,#ffeef5,#ffb3d9);
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            overflow:hidden;
+            color:#ff1493;
         }
         #countdown{
-            text-aligncenter;
-            padding40px;
-            backgroundrgba(255,255,255,0.25);
-            backdrop-filterblur(15px);
-            border-radius25px;
-            box-shadow0 20px 50px rgba(255,105,180,0.3);
-            animationfadeIn 1.5s ease-out;
-            max-width90%;
+            text-align:center;
+            padding:40px;
+            background:rgba(255,255,255,0.25);
+            backdrop-filter:blur(15px);
+            border-radius:25px;
+            box-shadow:0 20px 50px rgba(255,105,180,0.3);
+            animation:fadeIn 1.5s ease-out;
+            max-width:90%;
         }
         h1{
-            font-size42px;
-            backgroundlinear-gradient(45deg,#ff69b4,#ff1493,#dc143c);
-            -webkit-background-cliptext;
-            -webkit-text-fill-colortransparent;
-            margin-bottom20px;
-            animationgradientShift 3s infinite;
+            font-size:42px;
+            background:linear-gradient(45deg,#ff69b4,#ff1493,#dc143c);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            margin-bottom:20px;
+            animation:gradientShift 3s infinite;
         }
         .timer{
-            font-size36px;
-            font-weightbold;
-            color#dc143c;
-            backgroundrgba(255,255,255,0.7);
-            padding18px 35px;
-            border-radius50px;
-            margin20px 0;
-            box-shadow0 8px 25px rgba(255,20,147,0.3);
-            displayinline-block;
-            min-width380px;
+            font-size:36px;
+            font-weight:bold;
+            color:#dc143c;
+            background:rgba(255,255,255,0.7);
+            padding:18px 35px;
+            border-radius:50px;
+            margin:20px 0;
+            box-shadow:0 8px 25px rgba(255,20,147,0.3);
+            display:inline-block;
+            min-width:380px;
         }
         p{
-            font-size20px;
-            margin15px 0;
-            color#8b4a6b;
+            font-size:20px;
+            margin:15px 0;
+            color:#8b4a6b;
         }
         .hint{
-            font-size18px;
-            color#ff69b4;
-            margin-top30px;
-            animationblink 2s infinite;
+            font-size:18px;
+            color:#ff69b4;
+            margin-top:30px;
+            animation:blink 2s infinite;
         }
         @keyframes fadeIn{
-            from{opacity0;transformtranslateY(20px);}
-            to{opacity1;transformtranslateY(0);}
+            from{opacity:0;transform:translateY(20px);}
+            to{opacity:1;transform:translateY(0);}
         }
         @keyframes gradientShift{
-            0%,100%{background-position0% 50%;}
-            50%{background-position100% 50%;}
+            0%,100%{background-position:0% 50%;}
+            50%{background-position:100% 50%;}
         }
         @keyframes blink{
-            0%,100%{opacity0.7;}
-            50%{opacity1;}
+            0%,100%{opacity:0.7;}
+            50%{opacity:1;}
         }
-        @media(max-width768px){
-            h1{font-size32px;}
-            .timer{font-size28px;padding15px 25px;min-widthauto;}
+        @media(max-width:768px){
+            h1{font-size:32px;}
+            .timer{font-size:28px;padding:15px 25px;min-width:auto;}
         }
-    style
-head
-body
+    </style>
+</head>
+<body>
 
-div id=countdown
-    h1🌸 距离惊喜开启还有h1
-    div class=timer id=openTimer40 天 0 时 0 分 0 秒div
+<div id="countdown">
+    <h1>🌸 距离惊喜开启还有</h1>
+    <div class="timer" id="openTimer">40 天 0 时 0 分 0 秒</div>
+    <div class="hint">💖</div>
+</div>
 
-    p✨ 距离你20岁生日还有 ✨p
-    div class=timer id=ageTimer355 天 0 时 0 分 0 秒div
-
-    div class=hint💖 按 L 触发小彩蛋  专属链接 uuid=74520div
-div
-
-script
-     目标时间
-    const openTime = new Date('2025-12-10T000000+0800');
-    const age20Time = new Date('2026-10-21T000000+0800');  假设20岁是2026.10.21
+<script>
+    // 目标时间
+    const openTime = new Date('2025-12-10T00:00:00+08:00');
+    const age20Time = new Date('2026-10-21T00:00:00+08:00'); // 假设20岁是2026.10.21
 
     function updateTimer(target, elementId) {
         const now = new Date();
         const diff = target - now;
-        if (diff = 0) {
-            document.getElementById(elementId).textContent = 已开启！🎉;
+        if (diff <= 0) {
+            document.getElementById(elementId).textContent = "已开启！🎉";
             return false;
         }
-        const days = Math.floor(diff  (1000606024));
-        const hours = Math.floor((diff % (1000606024))  (10006060));
-        const mins = Math.floor((diff % (10006060))  (100060));
-        const secs = Math.floor((diff % (100060))  1000);
+        const days = Math.floor(diff / (1000*60*60*24));
+        const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+        const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
+        const secs = Math.floor((diff % (1000*60)) / 1000);
         document.getElementById(elementId).textContent = 
             `${days}天 ${hours}时 ${mins}分 ${secs}秒`;
         return true;
     }
 
-     初始化（基于当前日期2025-10-31预设值）
+    // 初始化（基于当前日期2025-10-31预设值）
     updateTimer(openTime, 'openTimer');
     updateTimer(age20Time, 'ageTimer');
 
-     实时更新
-    setInterval(() = {
+    // 实时更新
+    setInterval(() => {
         updateTimer(openTime, 'openTimer');
         updateTimer(age20Time, 'ageTimer');
     }, 1000);
 
-     按 L 彩蛋
-    document.addEventListener('keydown', e = {
+    // 按 L 彩蛋
+    document.addEventListener('keydown', e => {
         if (e.code === 'KeyL') {
-            for(let i=0; i20; i++){
-                setTimeout(() = {
+            for(let i=0; i<20; i++){
+                setTimeout(() => {
                     const heart = document.createElement('div');
-                    heart.textContent = ['💖','💝','💕','🌸','✨','🎂','🫶'][Math.floor(Math.random()7)];
+                    heart.textContent = ['💖','💝','💕','🌸','✨','🎂','🫶'][Math.floor(Math.random()*7)];
                     heart.style.cssText = `
-                        position fixed;
-                        left ${Math.random()100}vw;
-                        top ${Math.random()100}vh;
-                        font-size 24px;
-                        pointer-events none;
-                        z-index 9999;
-                        animation float 2s ease-out forwards;
+                        position: fixed;
+                        left: ${Math.random()*100}vw;
+                        top: ${Math.random()*100}vh;
+                        font-size: 24px;
+                        pointer-events: none;
+                        z-index: 9999;
+                        animation: float 2s ease-out forwards;
                     `;
                     document.body.appendChild(heart);
-                    setTimeout(() = heart.remove(), 2000);
-                }, i100);
+                    setTimeout(() => heart.remove(), 2000);
+                }, i*100);
             }
-             添加提示
+            // 添加提示
             const tip = document.createElement('div');
             tip.textContent = '惊喜彩蛋激活！🫣';
             tip.style.cssText = `
-                position fixed;
-                top 20px;
-                left 50%;
-                transform translateX(-50%);
-                background rgba(255,105,180,0.9);
-                color white;
-                padding 10px 20px;
-                border-radius 20px;
-                font-size 16px;
-                z-index 10000;
-                animation fadeIn 0.5s ease-out;
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(255,105,180,0.9);
+                color: white;
+                padding: 10px 20px;
+                border-radius: 20px;
+                font-size: 16px;
+                z-index: 10000;
+                animation: fadeIn 0.5s ease-out;
             `;
             document.body.appendChild(tip);
-            setTimeout(() = tip.remove(), 3000);
+            setTimeout(() => tip.remove(), 3000);
         }
     });
 
-     彩蛋动画
+    // 彩蛋动画
     const style = document.createElement('style');
     style.textContent = `
         @keyframes float {
             0% { 
-                transform translateY(0) scale(1); 
-                opacity 1; 
+                transform: translateY(0) scale(1); 
+                opacity: 1; 
             }
             100% { 
-                transform translateY(-120px) scale(1.2) rotate(360deg); 
-                opacity 0; 
+                transform: translateY(-120px) scale(1.2) rotate(360deg); 
+                opacity: 0; 
             }
         }
     `;
     document.head.appendChild(style);
 
-     鼠标移动小动画
-    document.addEventListener('mousemove', e = {
-        if (Math.random()  0.05) {
+    // 鼠标移动小动画
+    document.addEventListener('mousemove', e => {
+        if (Math.random() < 0.05) {
             const sparkle = document.createElement('div');
             sparkle.textContent = '✨';
             sparkle.style.cssText = `
-                position fixed;
-                left ${e.clientX}px;
-                top ${e.clientY}px;
-                font-size 12px;
-                pointer-events none;
-                z-index 999;
-                animation sparkle 1s ease-out forwards;
+                position: fixed;
+                left: ${e.clientX}px;
+                top: ${e.clientY}px;
+                font-size: 12px;
+                pointer-events: none;
+                z-index: 999;
+                animation: sparkle 1s ease-out forwards;
             `;
             document.body.appendChild(sparkle);
-            setTimeout(() = sparkle.remove(), 1000);
+            setTimeout(() => sparkle.remove(), 1000);
         }
     });
 
     const sparkleStyle = document.createElement('style');
     sparkleStyle.textContent = `
         @keyframes sparkle {
-            0% { transform scale(0) rotate(0deg); opacity 1; }
-            100% { transform scale(2) rotate(180deg); opacity 0; }
+            0% { transform: scale(0) rotate(0deg); opacity: 1; }
+            100% { transform: scale(2) rotate(180deg); opacity: 0; }
         }
     `;
     document.head.appendChild(sparkleStyle);
-script
+</script>
 
-body
-html
+</body>
+</html>
