@@ -400,7 +400,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #222 0%, #000 100%);
+            /* === [NEW] 1. 更换为星空背景 === */
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%); /* Deep space blue */
             color: #ff69b4;
             display: flex;
             flex-direction: column;
@@ -409,7 +410,8 @@
             text-align: center;
             z-index: 20000;
             transition: opacity 1s ease-out;
-            padding: 20px; /* 为小屏幕添加一些内边距 */
+            padding: 20px; 
+            overflow: hidden; /* 隐藏溢出 */
         }
         
         #countdown-wrapper.hidden {
@@ -460,27 +462,41 @@
             margin-top: 5px;
         }
 
-        /* --- 升级版星星动画 (New CSS Star) --- */
+        /* === [NEW] 2. 星座布局 === */
+        
+        #star-animation-container {
+            width: 100%;
+            text-align: center;
+        }
+
+        #stars-row {
+            /* 移除旧的 flex 布局 */
+            position: relative; /* 关键：设为星座"画布" */
+            width: 90%; /* 响应式宽度 */
+            max-width: 500px; /* 最大宽度 */
+            height: 300px; /* 画布高度 */
+            margin: 20px auto 0;
+            /* border: 1px dashed #555; */ /* (可选) 调试时打开，查看画布边界 */
+        }
+        
         .animated-css-star {
-            display: inline-block;
-            width: 30px; /* Star size */
-            height: 30px;
-            position: relative;
-            opacity: 0.2; /* "Off" state */
+            width: 25px; /* 星星大小 */
+            height: 25px;
+            position: absolute; /* 关键：绝对定位 */
+            opacity: 0.2; /* "关闭" 状态 */
             transition: all 0.5s ease-in-out;
             transform: scale(0.8);
             background: #ffd700;
-            /* 使用 clip-path 绘制星星 */
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
         }
 
         .animated-css-star.star-lit {
             opacity: 1;
             transform: scale(1);
-            /* 更高级的发光动画 */
             animation: starGlow 1.5s infinite alternate ease-in-out;
         }
 
+        /* 星星发光动画 (保持不变, 效果很好) */
         @keyframes starGlow {
             0% {
                 transform: scale(1);
@@ -492,28 +508,33 @@
             }
         }
         
-        #star-animation-container {
-            width: 100%;
-            text-align: center;
-        }
-
-        #stars-row {
-            font-size: 0; /* 重置 font-size 因为我们不用 emoji */
-            height: auto; 
-            padding: 20px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap; /* 允许星星在小屏幕上换行 */
-            gap: 15px; /* 星星之间的间距 */
-            max-width: 80%; /* 限制最大宽度 */
-        }
-        
         #star-status {
             font-size: 24px;
             color: #98fb98;
             margin-bottom: 10px;
         }
+        
+        /* --- [NEW] 星座位置 (20颗星) --- */
+        .animated-css-star:nth-child(1) { top: 10%; left: 15%; }
+        .animated-css-star:nth-child(2) { top: 20%; left: 30%; }
+        .animated-css-star:nth-child(3) { top: 15%; left: 50%; }
+        .animated-css-star:nth-child(4) { top: 5%; left: 70%; }
+        .animated-css-star:nth-child(5) { top: 25%; left: 85%; }
+        .animated-css-star:nth-child(6) { top: 40%; left: 75%; }
+        .animated-css-star:nth-child(7) { top: 35%; left: 55%; }
+        .animated-css-star:nth-child(8) { top: 45%; left: 40%; }
+        .animated-css-star:nth-child(9) { top: 30%; left: 20%; }
+        .animated-css-star:nth-child(10) { top: 50%; left: 5%; }
+        .animated-css-star:nth-child(11) { top: 65%; left: 18%; }
+        .animated-css-star:nth-child(12) { top: 55%; left: 30%; }
+        .animated-css-star:nth-child(13) { top: 70%; left: 45%; }
+        .animated-css-star:nth-child(14) { top: 60%; left: 60%; }
+        .animated-css-star:nth-child(15) { top: 75%; left: 75%; }
+        .animated-css-star:nth-child(16) { top: 65%; left: 90%; }
+        .animated-css-star:nth-child(17) { top: 85%; left: 80%; }
+        .animated-css-star:nth-child(18) { top: 90%; left: 60%; }
+        .animated-css-star:nth-child(19) { top: 80%; left: 35%; }
+        .animated-css-star:nth-child(20) { top: 95%; left: 10%; }
         /* --- 动画样式结束 --- */
 
         /* 确保主体内容在倒计时时隐藏 */
@@ -660,7 +681,7 @@
 每當我想到妳現在在忙些什麼，<br>
 有沒有好好吃飯、<br>
 有沒有好好休息，<br>
-我都會忍不住默默為妳祈禱，<br>
+我都会忍不住默默為妳祈禱，<br>
 希望妳一切都好，平安健康。<br>
 <br>
 妳知道嗎？<br>
@@ -711,7 +732,7 @@
 也可以把這份愛轉回自己身上，<br>
 好好疼惜妳自己，好好愛自己。<br>
 <br>
-有時候我們會懷疑自己，<br>
+有時候我们会懷疑自己，<br>
 會問「我這樣夠好嗎？」「我是不是不夠聰明、不夠漂亮、不夠厲害？」<br>
 但其實，<br>
 那些標準根本不重要。<br>
@@ -843,7 +864,7 @@
             function createStarsForAnimation() {
                 for (let i = 0; i < totalStars; i++) {
                     const star = document.createElement('div');
-                    // *** MODIFIED: 使用新的 CSS class ***
+                    // *** 使用新的 CSS class ***
                     star.className = 'animated-css-star'; 
                     starsRow.appendChild(star);
                 }
@@ -857,18 +878,17 @@
                 starContainer.style.display = 'block';
                 
                 createStarsForAnimation();
-                // *** MODIFIED: 使用新的 class selector ***
+                // *** 使用新的 class selector ***
                 const stars = starsRow.querySelectorAll('.animated-css-star'); 
                 let litCount = 0;
 
                 function lightUpStar() {
                     if (litCount < totalStars) {
-                        // *** MODIFIED: class 'star-lit' 保持不变, CSS 效果已更新 ***
                         stars[litCount].classList.add('star-lit'); 
                         starStatus.textContent = `正在點亮第 ${litCount + 1} 顆星...`;
                         litCount++;
-                        // 加快动画速度
-                        starAnimationTimeout = setTimeout(lightUpStar, 150); 
+                        // === [NEW] 3. 点亮速度改为 0.5 秒 ===
+                        starAnimationTimeout = setTimeout(lightUpStar, 500); 
                     } else {
                         starStatus.textContent = `🎉 20 顆星已全部點亮！系統啟動...`;
                         setTimeout(transitionToMainContent, 1500); // 动画结束后停留1.5秒
