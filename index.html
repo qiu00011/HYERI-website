@@ -13,17 +13,6 @@
             box-sizing: border-box;
         }
 
-        /* ---------- 银河画布（置底） ---------- */
-        #galaxyCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0; /* 保证在背景最底层 */
-            pointer-events: none;
-        }
-
         body {
             font-family: 'Arial', sans-serif;
             background: url('bg.jpg') center/cover no-repeat fixed, linear-gradient(135deg, #ffeef5 0%, #ffb3d9 100%);
@@ -153,7 +142,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            z-index: 2; /* 在银河画布之上 */
+            z-index: 2;
         }
 
         .envelope-container {
@@ -400,7 +389,7 @@
 
         @font-face {
             font-family: 'Digital';
-            src: local('Consolas'), local('Monospace');
+            src: local('Consolas'), local('Monospace'); 
         }
 
         #countdown-wrapper {
@@ -423,7 +412,7 @@
             text-align: center;
             z-index: 20000;
             transition: opacity 1s ease-out;
-            padding: 20px;
+            padding: 20px; 
             overflow: hidden;
             animation: galaxyFlow 25s linear infinite, galaxyTwinkle 4s ease-in-out infinite;
         }
@@ -443,7 +432,7 @@
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background:
+            background: 
                 radial-gradient(1px 1px at 8% 12%, #fff 100%, transparent 0),
                 radial-gradient(1px 1px at 15% 78%, #ffd700 100%, transparent 0),
                 radial-gradient(2px 2px at 48% 22%, #fff 100%, transparent 0),
@@ -534,7 +523,6 @@
             overflow: visible;
         }
 
-        /* 星星（20颗）基础样式，由 nth-child 定位 */
         .animated-css-star {
             width: 25px;
             height: 25px;
@@ -544,16 +532,14 @@
             background: #ffd700;
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
             filter: blur(1.5px);
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            z-index: 3;
+            transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .animated-css-star.star-lit {
             opacity: 1;
-            transform: scale(1.3) rotate(180deg);
-            filter: blur(0);
+            transform: scale(1.5) rotate(180deg);
+            filter: blur(0) drop-shadow(0 0 20px #ffd700);
             animation: starPulse 2.5s infinite alternate ease-in-out;
-            box-shadow: 0 0 14px rgba(255, 215, 0, 0.9);
         }
 
         .animated-css-star.star-lit::before,
@@ -567,41 +553,53 @@
         }
 
         .animated-css-star.star-lit::before {
-            width: 45px; height: 45px;
+            width: 50px; height: 50px;
             animation: glowExpand 2s infinite ease-out;
         }
 
         .animated-css-star.star-lit::after {
-            width: 70px; height: 70px;
+            width: 80px; height: 80px;
             opacity: 0.4;
             animation: glowExpand 2s infinite ease-out 0.6s;
         }
 
         @keyframes starPulse {
-            0% { transform: scale(1.1) rotate(180deg); filter: drop-shadow(0 0 6px #ffd700) brightness(1); }
-            100% { transform: scale(1.4) rotate(200deg); filter: drop-shadow(0 0 18px #ff69b4) brightness(1.8); }
+            0% { transform: scale(1.3) rotate(180deg); filter: blur(0) drop-shadow(0 0 15px #ffd700) brightness(1); }
+            100% { transform: scale(1.6) rotate(200deg); filter: blur(0) drop-shadow(0 0 25px #ff69b4) brightness(1.8); }
         }
 
         @keyframes glowExpand {
-            0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.8; }
-            70% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.3; }
-            100% { transform: translate(-50%, -50%) scale(1.8); opacity: 0; }
+            0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.9; }
+            70% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.3; }
+            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
         }
 
-        /* 连线样式（SVG 中的线段） */
+        #constellation-lines {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
         .constellation-line {
-            stroke: rgba(255, 215, 0, 0.35);
-            stroke-width: 2;
+            stroke: rgba(255, 215, 0, 0.3);
+            stroke-width: 1.5;
             fill: none;
             opacity: 0;
-            transition: opacity 0.4s ease, stroke 0.3s ease;
-            filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.7));
-            z-index: 2;
+            transition: opacity 0.8s ease, stroke 0.5s ease;
         }
 
         .constellation-line.active {
             opacity: 1;
-            stroke: url(#lineGradient);
+            stroke: #ffd700;
+            filter: drop-shadow(0 0 4px #ffd700);
+            animation: linePulse 2s infinite ease-in-out;
+        }
+
+        @keyframes linePulse {
+            0%, 100% { stroke: #ffd700; stroke-width: 1.5; }
+            50% { stroke: #ff69b4; stroke-width: 2; }
         }
 
         #star-status {
@@ -612,7 +610,6 @@
             z-index: 2;
         }
 
-        /* 20 星位置信息（保留你之前的相对布局） */
         .animated-css-star:nth-child(1) { top: 10%; left: 15%; }
         .animated-css-star:nth-child(2) { top: 20%; left: 30%; }
         .animated-css-star:nth-child(3) { top: 15%; left: 50%; }
@@ -634,15 +631,77 @@
         .animated-css-star:nth-child(19) { top: 80%; left: 35%; }
         .animated-css-star:nth-child(20) { top: 95%; left: 10%; }
 
+        /* 流星特效 */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+            animation: shootingStar 1.5s ease-out forwards;
+            z-index: 3;
+        }
+
+        @keyframes shootingStar {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(300px, 300px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .shooting-star::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), transparent);
+            transform: translateX(-80px);
+            border-radius: 50%;
+        }
+
+        /* 银河流动效果增强 */
+        #countdown-wrapper.galaxy-active {
+            animation: galaxyFlow 20s linear infinite, galaxyIntense 3s ease-in-out infinite;
+        }
+
+        @keyframes galaxyIntense {
+            0%, 100% { 
+                filter: brightness(1) contrast(1);
+            }
+            50% { 
+                filter: brightness(1.2) contrast(1.1);
+            }
+        }
+
+        /* 星星连线动画增强 */
+        .constellation-line.active {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawLine 1s ease-out forwards, linePulse 2s infinite ease-in-out 1s;
+        }
+
+        @keyframes drawLine {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
         #mainContent {
             display: none;
         }
     </style>
 </head>
 <body>
-    <!-- 银河画布（放最底层） -->
-    <canvas id="galaxyCanvas"></canvas>
-
     <div id="countdown-wrapper">
         <div class="countdown-title">惊喜启动中🚀...</div>
         <div id="countdown-display">
@@ -650,7 +709,7 @@
         <div class="countdown-note">启动成功✅</div>
         <div id="star-animation-container" style="display: none; margin-top: 30px;">
             <div id="star-status">🥹这是一个特别的日子🎞️</div>
-            <div id="stars-row"><svg id="constellation-lines" width="100%" height="100%"><defs><linearGradient id="lineGradient" x1="0" x2="1"><stop offset="0%" stop-color="#ffd700"/><stop offset="100%" stop-color="#ff69b4"/></linearGradient></defs></svg></div>
+            <div id="stars-row"><svg id="constellation-lines"></svg></div>
         </div>
     </div>
     
@@ -1486,3 +1545,4 @@
     </script>
 </body>
 </html>
+
