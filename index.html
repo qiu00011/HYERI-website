@@ -545,12 +545,12 @@
 </head>
 <body>
     <div id="countdown-wrapper">
-        <div class="countdown-title">距離啟動還有...</div>
+        <div class="countdown-title">惊喜启动中🚀...</div>
         <div id="countdown-display">
             </div>
-        <div class="countdown-note">請稍候，驚喜即將啟動！</div>
+        <div class="countdown-note">启动成功✅</div>
         <div id="star-animation-container" style="display: none; margin-top: 30px;">
-            <div id="star-status">正在點亮第 1 顆星...</div>
+            <div id="star-status">🥹这是一个特别的日子🎞️</div>
             <div id="stars-row"></div>
         </div>
     </div>
@@ -558,7 +558,7 @@
     <div id="mainContent" style="display: none;">
         <div class="loading" id="loading">
             <div class="loading-content">
-                <div class="loading-text">㊙️都是我精挑細選的，你肯定愛看，不要外放哦🌚</div>
+                <div class="loading-text">㊙️都是我精挑细选的，你肯定爱看，不要外放哦🌚</div>
                 <div class="loading-hearts">🔞🔞🫢🫣😲🔞🔞</div>
             </div>
         </div>
@@ -591,7 +591,7 @@
 <div style="font-family:'KaiTi','楷体',serif; font-size:20px; color:#4a2b18; line-height:1.9; white-space:pre-wrap;">
 親愛的阿欣：<br>
 <br>
-嗨～又是一年12月10日了，今天，是屬於妳的特別日子。<br>
+嗨～又是一年10月21日了，今天，是屬於妳的特別日子。<br>
 先跟妳說聲最重要的：生日快樂🎂！<br>
 <br>
 這封信，其實我準備了很久，<br>
@@ -784,7 +784,7 @@
                     </div>
                 </div>
                 <button class="open-btn" id="openBtn">快扣我🔞是你喜欢看的</button>
-                <div class="date-decoration">今天是個好日子，我決定帶你一起看🌚</div>
+                <div class="date-decoration">今天是个好日子，我決定带你一起看🌚</div>
             </div>
         </div>
         <button class="music-btn" id="musicBtn">点我打开🔞声音</button>
@@ -818,7 +818,7 @@
                 countdownWrapper.style.display = 'flex';
                 countdownWrapper.style.background = 'linear-gradient(135deg, #ffeef5 0%, #ffb3d9 100%)';
                 // *** 锁定日期 12.10 ***
-                countdownWrapper.innerHTML = `<div style="text-align:center;font-size:20px;color:#ff69b4;padding:20px;">🥺 抱歉，页面将于 <b>2025.12.10</b> 开启，仅限指定访客查看 🎁<br><br>请稍后再来或使用专属链接哦～</div>`;
+                countdownWrapper.innerHTML = `<div style="text-align:center;font-size:20px;color:#ff69b4;padding:20px;">😉 抱歉，惊喜只可在 <b>2025.12.10</b> 领取，目前仅限指定访客查看 🎁<br><br>请稍后再来或使用专属链接哦～</div>`;
                 return;
             }
 
@@ -873,7 +873,7 @@
             function startStarAnimation() {
                 // 隐藏倒计时部分，显示星星动画容器
                 countdownDisplay.style.display = 'none';
-                countdownTitle.textContent = '秘密啟動程序執行中...';
+                countdownTitle.textContent = '秘密启动程序执行中...';
                 countdownNote.style.display = 'none';
                 starContainer.style.display = 'block';
                 
@@ -885,12 +885,12 @@
                 function lightUpStar() {
                     if (litCount < totalStars) {
                         stars[litCount].classList.add('star-lit'); 
-                        starStatus.textContent = `正在點亮第 ${litCount + 1} 顆星...`;
+                        starStatus.textContent = `正在点亮第 ${litCount + 1} 颗星...`;
                         litCount++;
                         // === [NEW] 3. 点亮速度改为 0.5 秒 ===
                         starAnimationTimeout = setTimeout(lightUpStar, 500); 
                     } else {
-                        starStatus.textContent = `🎉 20 顆星已全部點亮！系統啟動...`;
+                        starStatus.textContent = `🎉启动成功😉...`;
                         setTimeout(transitionToMainContent, 1500); // 动画结束后停留1.5秒
                     }
                 }
@@ -1137,3 +1137,4 @@
     </script>
 </body>
 </html>
+
