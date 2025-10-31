@@ -484,6 +484,15 @@
             height: 25px;
             position: absolute; /* 关键：绝对定位 */
             opacity: 0.2; /* "关闭" 状态 */
+            transition: all 0.5s ease-in-out;
+            transform: scale(0.8);
+            background: #ffd700;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+
+        .animated-css-star.star-lit {
+            opacity: 1;
+            transform: scale(1);
             animation: starGlow 1.5s infinite alternate ease-in-out;
         }
 
@@ -804,7 +813,7 @@
             const isValidAccess = uuid === uuidRequired || now.getTime() >= target.getTime();
             let countdownInterval = null;
             let starAnimationTimeout = null;
-            const totalStars = 20;
+            const totalStars = 12; // Reduced for Capricorn constellation
 
             if (!isValidAccess) {
                 countdownWrapper.style.display = 'flex';
@@ -857,8 +866,39 @@
                 for (let i = 0; i < totalStars; i++) {
                     const star = document.createElement('div');
                     star.className = 'animated-css-star'; 
+                    star.dataset.index = i;
                     starsRow.appendChild(star);
                 }
+            }
+
+            function createConstellationLines() {
+                const stars = starsRow.querySelectorAll('.animated-css-star');
+                connections.forEach(([i, j]) => {
+                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    line.className = 'constellation-line';
+                    line.dataset.from = i;
+                    line.dataset.to = j;
+                    linesSVG.appendChild(line);
+                });
+            }
+
+            function updateLines() {
+                const stars = starsRow.querySelectorAll('.animated-css-star');
+                const rect = starsRow.getBoundingClientRect();
+                document.querySelectorAll('.constellation-line').forEach(line => {
+                    const i = parseInt(line.dataset.from);
+                    const j = parseInt(line.dataset.to);
+                    const s1 = stars[i].getBoundingClientRect();
+                    const s2 = stars[j].getBoundingClientRect();
+                    const x1 = s1.left - rect.left + s1.width / 2;
+                    const y1 = s1.top - rect.top + s1.height / 2;
+                    const x2 = s2.left - rect.left + s2.width / 2;
+                    const y2 = s2.top - rect.top + s2.height / 2;
+                    line.setAttribute('x1', x1);
+                    line.setAttribute('y1', y1);
+                    line.setAttribute('x2', x2);
+                    line.setAttribute('y2', y2);
+                });
             }
 
             function startStarAnimation() {
@@ -875,6 +915,15 @@
                 function lightUpStar() {
                     if (litCount < totalStars) {
                         stars[litCount].classList.add('star-lit'); 
+                        updateLines();
+                        // 激活相关连线
+                        document.querySelectorAll(`[data-from="${litCount}"], [data-to="${litCount}"]`).forEach(l => {
+                            if ([...l.classList].includes('active') || 
+                                (l.dataset.from < litCount && l.dataset.to <= litCount) ||
+                                (l.dataset.to < litCount && l.dataset.from <= litCount)) {
+                                l.classList.add('active');
+                            }
+                        });
                         starStatus.textContent = `正在点亮第 ${litCount + 1} 颗星...`;
                         litCount++;
                         starAnimationTimeout = setTimeout(lightUpStar, 500); 
