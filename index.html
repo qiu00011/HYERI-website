@@ -400,8 +400,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* === [NEW] 1. 更换为星空背景 === */
-            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%); /* Deep space blue */
+            /* 星空背景 */
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%); 
             color: #ff69b4;
             display: flex;
             flex-direction: column;
@@ -411,7 +411,7 @@
             z-index: 20000;
             transition: opacity 1s ease-out;
             padding: 20px; 
-            overflow: hidden; /* 隐藏溢出 */
+            overflow: hidden;
         }
         
         #countdown-wrapper.hidden {
@@ -435,7 +435,7 @@
 
         .countdown-display {
             font-family: 'Digital', 'Consolas', monospace;
-            font-size: clamp(32px, 10vw, 60px); /* 自适应字体大小 */
+            font-size: clamp(32px, 10vw, 60px); 
             display: flex;
             gap: 15px;
             padding: 20px;
@@ -451,7 +451,7 @@
         }
 
         .time-value {
-            color: #ffd700; /* 金色数码管效果 */
+            color: #ffd700; 
             padding: 0 5px;
         }
 
@@ -462,7 +462,7 @@
             margin-top: 5px;
         }
 
-        /* === [NEW] 2. 星座布局 === */
+        /* --- 星座布局和连线 CSS --- */
         
         #star-animation-container {
             width: 100%;
@@ -470,24 +470,24 @@
         }
 
         #stars-row {
-            /* 移除旧的 flex 布局 */
-            position: relative; /* 关键：设为星座"画布" */
-            width: 90%; /* 响应式宽度 */
-            max-width: 500px; /* 最大宽度 */
-            height: 300px; /* 画布高度 */
+            position: relative; 
+            width: 90%; 
+            max-width: 500px; 
+            height: 300px; 
             margin: 20px auto 0;
-            /* border: 1px dashed #555; */ /* (可选) 调试时打开，查看画布边界 */
         }
         
         .animated-css-star {
-            width: 25px; /* 星星大小 */
+            width: 25px; 
             height: 25px;
-            position: absolute; /* 关键：绝对定位 */
-            opacity: 0.2; /* "关闭" 状态 */
+            position: absolute; 
+            opacity: 0.2; 
             transition: all 0.5s ease-in-out;
             transform: scale(0.8);
             background: #ffd700;
+            /* Star shape CSS */
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            z-index: 10; /* Make sure stars are above the lines */
         }
 
         .animated-css-star.star-lit {
@@ -496,7 +496,7 @@
             animation: starGlow 1.5s infinite alternate ease-in-out;
         }
 
-        /* 星星发光动画 (保持不变, 效果很好) */
+        /* 星星发光动画 */
         @keyframes starGlow {
             0% {
                 transform: scale(1);
@@ -508,34 +508,34 @@
             }
         }
         
+        /* 星座连线容器 */
+        #constellation-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* 单个连线样式 */
+        .constellation-line {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.4); 
+            height: 2px;
+            transform-origin: 0 50%;
+            transition: width 0.5s linear, opacity 0.5s ease-in; /* 动画连线宽度和透明度 */
+            box-shadow: 0 0 5px rgba(255, 105, 180, 0.5); 
+            width: 0; /* 初始宽度为0 */
+            opacity: 0;
+        }
+        
         #star-status {
             font-size: 24px;
             color: #98fb98;
             margin-bottom: 10px;
         }
-        
-        /* --- [NEW] 星座位置 (20颗星) --- */
-        .animated-css-star:nth-child(1) { top: 10%; left: 15%; }
-        .animated-css-star:nth-child(2) { top: 20%; left: 30%; }
-        .animated-css-star:nth-child(3) { top: 15%; left: 50%; }
-        .animated-css-star:nth-child(4) { top: 5%; left: 70%; }
-        .animated-css-star:nth-child(5) { top: 25%; left: 85%; }
-        .animated-css-star:nth-child(6) { top: 40%; left: 75%; }
-        .animated-css-star:nth-child(7) { top: 35%; left: 55%; }
-        .animated-css-star:nth-child(8) { top: 45%; left: 40%; }
-        .animated-css-star:nth-child(9) { top: 30%; left: 20%; }
-        .animated-css-star:nth-child(10) { top: 50%; left: 5%; }
-        .animated-css-star:nth-child(11) { top: 65%; left: 18%; }
-        .animated-css-star:nth-child(12) { top: 55%; left: 30%; }
-        .animated-css-star:nth-child(13) { top: 70%; left: 45%; }
-        .animated-css-star:nth-child(14) { top: 60%; left: 60%; }
-        .animated-css-star:nth-child(15) { top: 75%; left: 75%; }
-        .animated-css-star:nth-child(16) { top: 65%; left: 90%; }
-        .animated-css-star:nth-child(17) { top: 85%; left: 80%; }
-        .animated-css-star:nth-child(18) { top: 90%; left: 60%; }
-        .animated-css-star:nth-child(19) { top: 80%; left: 35%; }
-        .animated-css-star:nth-child(20) { top: 95%; left: 10%; }
-        /* --- 动画样式结束 --- */
 
         /* 确保主体内容在倒计时时隐藏 */
         #mainContent {
@@ -545,20 +545,22 @@
 </head>
 <body>
     <div id="countdown-wrapper">
-        <div class="countdown-title">惊喜启动中🚀...</div>
+        <div class="countdown-title">距離啟動還有...</div>
         <div id="countdown-display">
             </div>
-        <div class="countdown-note">启动成功✅</div>
+        <div class="countdown-note">請稍候，驚喜即將啟動！</div>
         <div id="star-animation-container" style="display: none; margin-top: 30px;">
-            <div id="star-status">🥹这是一个特别的日子🎞️</div>
-            <div id="stars-row"></div>
+            <div id="star-status">正在點亮第 1 顆星...</div>
+            <div id="stars-row">
+                <div id="constellation-lines"></div>
+            </div>
         </div>
     </div>
     
     <div id="mainContent" style="display: none;">
         <div class="loading" id="loading">
             <div class="loading-content">
-                <div class="loading-text">㊙️都是我精挑细选的，你肯定爱看，不要外放哦🌚</div>
+                <div class="loading-text">㊙️都是我精挑細選的，你肯定愛看，不要外放哦🌚</div>
                 <div class="loading-hearts">🔞🔞🫢🫣😲🔞🔞</div>
             </div>
         </div>
@@ -591,7 +593,7 @@
 <div style="font-family:'KaiTi','楷体',serif; font-size:20px; color:#4a2b18; line-height:1.9; white-space:pre-wrap;">
 親愛的阿欣：<br>
 <br>
-嗨～又是一年10月21日了，今天，是屬於妳的特別日子。<br>
+嗨～又是一年12月10日了，今天，是屬於妳的特別日子。<br>
 先跟妳說聲最重要的：生日快樂🎂！<br>
 <br>
 這封信，其實我準備了很久，<br>
@@ -681,7 +683,7 @@
 每當我想到妳現在在忙些什麼，<br>
 有沒有好好吃飯、<br>
 有沒有好好休息，<br>
-我都会忍不住默默為妳祈禱，<br>
+我都會忍不住默默為妳祈禱，<br>
 希望妳一切都好，平安健康。<br>
 <br>
 妳知道嗎？<br>
@@ -732,7 +734,7 @@
 也可以把這份愛轉回自己身上，<br>
 好好疼惜妳自己，好好愛自己。<br>
 <br>
-有時候我们会懷疑自己，<br>
+有時候我們會懷疑自己，<br>
 會問「我這樣夠好嗎？」「我是不是不夠聰明、不夠漂亮、不夠厲害？」<br>
 但其實，<br>
 那些標準根本不重要。<br>
@@ -752,7 +754,7 @@
 都能做自己、愛自己。<br>
 <br>
 阿欣，謝謝妳出現在我的世界裡。<br>
-雖然我們的故事可能不像電影一樣轟轟烈烈，<br>
+雖然我們的故事可能不像電影一樣轟轟烈烈，<<br>
 但卻是真實而溫暖的存在。<br>
 未來的日子裡，<br>
 我還是會繼續默默地在遠方祝福妳。<br>
@@ -784,7 +786,7 @@
                     </div>
                 </div>
                 <button class="open-btn" id="openBtn">快扣我🔞是你喜欢看的</button>
-                <div class="date-decoration">今天是个好日子，我決定带你一起看🌚</div>
+                <div class="date-decoration">今天是個好日子，我決定帶你一起看🌚</div>
             </div>
         </div>
         <button class="music-btn" id="musicBtn">点我打开🔞声音</button>
@@ -808,17 +810,31 @@
             const starContainer = document.getElementById('star-animation-container');
             const starsRow = document.getElementById('stars-row');
             const starStatus = document.getElementById('star-status');
+            const linesContainer = document.getElementById('constellation-lines');
 
             const isValidAccess = uuid === uuidRequired || now.getTime() >= target.getTime();
             let countdownInterval = null;
             let starAnimationTimeout = null;
             const totalStars = 20;
+            let litCount = 0; // 提升作用域
+
+            // === [NEW] 星座位置数据 (用于定位和计算连线) ===
+            // 注意: 这些百分比是相对于 #stars-row (500px x 300px)
+            const STAR_POSITIONS = [
+                { top: '10%', left: '15%' }, { top: '20%', left: '30%' }, { top: '15%', left: '50%' },
+                { top: '5%', left: '70%' }, { top: '25%', left: '85%' }, { top: '40%', left: '75%' },
+                { top: '35%', left: '55%' }, { top: '45%', left: '40%' }, { top: '30%', left: '20%' },
+                { top: '50%', left: '5%' }, { top: '65%', left: '18%' }, { top: '55%', left: '30%' },
+                { top: '70%', left: '45%' }, { top: '60%', left: '60%' }, { top: '75%', left: '75%' },
+                { top: '65%', left: '90%' }, { top: '85%', left: '80%' }, { top: '90%', left: '60%' },
+                { top: '80%', left: '35%' }, { top: '95%', left: '10%' }
+            ];
 
             if (!isValidAccess) {
                 countdownWrapper.style.display = 'flex';
                 countdownWrapper.style.background = 'linear-gradient(135deg, #ffeef5 0%, #ffb3d9 100%)';
                 // *** 锁定日期 12.10 ***
-                countdownWrapper.innerHTML = `<div style="text-align:center;font-size:20px;color:#ff69b4;padding:20px;">😉 抱歉，惊喜只可在 <b>2025.12.10</b> 领取，目前仅限指定访客查看 🎁<br><br>请稍后再来或使用专属链接哦～</div>`;
+                countdownWrapper.innerHTML = `<div style="text-align:center;font-size:20px;color:#ff69b4;padding:20px;">🥺 抱歉，页面将于 <b>2025.12.10</b> 开启，仅限指定访客查看 🎁<br><br>请稍后再来或使用专属链接哦～</div>`;
                 return;
             }
 
@@ -862,40 +878,77 @@
 
             // --- 星星动画逻辑 ---
             function createStarsForAnimation() {
+                // 1. 创建星星元素并应用定位
                 for (let i = 0; i < totalStars; i++) {
                     const star = document.createElement('div');
-                    // *** 使用新的 CSS class ***
                     star.className = 'animated-css-star'; 
+                    // 应用 inline position 
+                    star.style.top = STAR_POSITIONS[i].top;
+                    star.style.left = STAR_POSITIONS[i].left;
                     starsRow.appendChild(star);
                 }
             }
 
-            function startStarAnimation() {
-                // 隐藏倒计时部分，显示星星动画容器
-                countdownDisplay.style.display = 'none';
-                countdownTitle.textContent = '㊙️惊喜启动中🚀...';
-                countdownNote.style.display = 'none';
-                starContainer.style.display = 'block';
+            // 获取元素的中心坐标 (相对于 #stars-row)
+            function getCenterCoords(element) {
+                const rect = element.getBoundingClientRect();
+                const parentRect = starsRow.getBoundingClientRect();
+                const size = rect.width || 25; // Fallback to 25px
                 
-                createStarsForAnimation();
-                // *** 使用新的 class selector ***
-                const stars = starsRow.querySelectorAll('.animated-css-star'); 
-                let litCount = 0;
+                return {
+                    x: (rect.left - parentRect.left) + size / 2,
+                    y: (rect.top - parentRect.top) + size / 2
+                };
+            }
 
-                function lightUpStar() {
-                    if (litCount < totalStars) {
-                        stars[litCount].classList.add('star-lit'); 
-                        starStatus.textContent = `正在点亮第 ${litCount + 1} 颗星...`;
-                        litCount++;
-                        // === [NEW] 3. 点亮速度改为 0.5 秒 ===
-                        starAnimationTimeout = setTimeout(lightUpStar, 500); 
-                    } else {
-                        starStatus.textContent = `😉叮~启动成功✅...`;
-                        setTimeout(transitionToMainContent, 1500); // 动画结束后停留1.5秒
+
+            function lightUpStar() {
+                const stars = starsRow.querySelectorAll('.animated-css-star');
+                
+                if (litCount < totalStars) {
+                    stars[litCount].classList.add('star-lit'); 
+                    starStatus.textContent = `正在點亮第 ${litCount + 1} 顆星...`;
+                    
+                    // === [NEW] 绘制星座连线逻辑 ===
+                    if (litCount > 0) {
+                        const star1 = stars[litCount - 1];
+                        const star2 = stars[litCount];
+
+                        // 确保元素已渲染，获取准确的中心坐标
+                        const pos1 = getCenterCoords(star1);
+                        const pos2 = getCenterCoords(star2);
+
+                        const dx = pos2.x - pos1.x;
+                        const dy = pos2.y - pos1.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        // 计算角度 (atan2(y, x) in radians) 并转换为 degrees
+                        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+                        const line = document.createElement('div');
+                        line.className = 'constellation-line';
+                        
+                        // 线条的起点在第一个星星的中心
+                        line.style.top = `${pos1.y}px`;
+                        line.style.left = `${pos1.x}px`;
+                        line.style.transform = `rotate(${angle}deg)`;
+                        
+                        linesContainer.appendChild(line);
+
+                        // 强制浏览器应用初始状态 (width: 0)
+                        line.getBoundingClientRect(); 
+                        
+                        // 触发 CSS 动画 (连线宽度和透明度)
+                        line.style.width = `${distance}px`;
+                        line.style.opacity = '1';
                     }
-                }
 
-                lightUpStar();
+                    litCount++;
+                    // === 点亮速度 0.5 秒 ===
+                    starAnimationTimeout = setTimeout(lightUpStar, 500); 
+                } else {
+                    starStatus.textContent = `🎉 20 顆星已全部點亮！星座構建完成！系統啟動...`;
+                    setTimeout(transitionToMainContent, 2000); // 动画结束后停留2秒
+                }
             }
             
             function transitionToMainContent() {
@@ -1111,23 +1164,23 @@
                 if (e.target.tagName !== 'BUTTON') createMouseHeart(e.clientX, e.clientY);
             });
 
+            // 音乐控制逻辑简化
             function initMusicControl() {
                 const musicBtn = document.getElementById('musicBtn');
-                const bgMusic = document.getElementById('bgMusic');
-                let isPlaying = false;
-
-                musicBtn.addEventListener('click', function() {
-                    toggleMusic();
-                });
+                musicBtn.addEventListener('click', toggleMusic);
             }
 
             function toggleMusic() {
                 const musicBtn = document.getElementById('musicBtn');
                 const bgMusic = document.getElementById('bgMusic');
                 if (bgMusic.paused) {
+                    // 使用 promise 确保播放成功后更新按钮
                     bgMusic.play().then(() => {
                         musicBtn.textContent = '🔇';
-                    }).catch(e => console.log('音乐播放失败:', e));
+                    }).catch(e => {
+                        console.log('音乐播放失败:', e);
+                        // 播放失败通常是浏览器限制，不作处理
+                    });
                 } else {
                     bgMusic.pause();
                     musicBtn.textContent = '🔈';
@@ -1137,5 +1190,3 @@
     </script>
 </body>
 </html>
-
-
