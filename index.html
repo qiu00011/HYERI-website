@@ -6,7 +6,7 @@
     <title>HYERI - A Tribute by HYEROOMY</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -110,7 +110,7 @@
 
         .hero {
             background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                        url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+                        url('picture/home.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -527,31 +527,13 @@
             fill: currentColor;
         }
 
-        .contact-info {
-            font-family: 'Inter', sans-serif;
-            font-weight: 300;
-        }
-
-        .contact-info p {
-            font-size: 0.95rem;
-            letter-spacing: 0.5px;
-            color: var(--accent);
-            margin-bottom: 0.8rem;
-            line-height: 1.8;
-        }
-
-        .contact-info .platform {
-            color: var(--secondary);
-            font-weight: 400;
-        }
-
-        .contact-info a {
+        .footer-column a {
             color: var(--secondary);
             text-decoration: none;
             transition: all 0.3s ease;
         }
 
-        .contact-info a:hover {
+        .footer-column a:hover {
             color: var(--primary);
         }
 
@@ -757,7 +739,7 @@
             </div>
             <div class="about-content">
                 <div class="about-img">
-                    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80" alt="Hyeri">
+                    <img src="picture/story.jpg" alt="Hyeri">
                 </div>
                 <div class="about-text">
                     <h3>Why We Love Her</h3>
@@ -799,7 +781,7 @@
             <div class="initiatives-grid">
                 <div class="initiative-card">
                     <div class="initiative-img">
-                        <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Friendly Rivalry">
+                        <img src="picture/vlog1.jpg" alt="Friendly Rivalry">
                     </div>
                     <div class="initiative-content">
                         <h3>Friendly Rivalry</h3>
@@ -809,7 +791,7 @@
                 </div>
                 <div class="initiative-card">
                     <div class="initiative-img">
-                        <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&auto=format&fit=crop&w=1931&q=80" alt="Reply 1988">
+                        <img src="picture/vlog2.jpg" alt="Reply 1988">
                     </div>
                     <div class="initiative-content">
                         <h3>Reply 1988</h3>
@@ -819,7 +801,7 @@
                 </div>
                 <div class="initiative-card">
                     <div class="initiative-img">
-                        <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80" alt="Girl's Day">
+                        <img src="picture/vlog3.jpg" alt="Girl's Day">
                     </div>
                     <div class="initiative-content">
                         <h3>Girl's Day Forever</h3>
@@ -886,12 +868,12 @@
                         <li><a href="#">Girl's Day</a></li>
                     </ul>
                 </div>
-                <div class="footer-column contact-info">
+                <div class="footer-column">
                     <h3>Connect</h3>
-                    <p><span class="platform">YouTube:</span> IamLeeHyeri</p>
-                    <p><span class="platform">Instagram:</span> hyeri_0609</p>
-                    <p><span class="platform">X:</span> hyeriherihey</p>
-                    <p><span class="platform">Email:</span> <a href="mailto:love@hyeri.top">love@hyeri.top</a></p>
+                    <p>YouTube: IamLeeHyeri</p>
+                    <p>Instagram: hyeri_0609</p>
+                    <p>X: hyeriherihey</p>
+                    <p>Email: <a href="mailto:love@hyeri.top">love@hyeri.top</a></p>
                 </div>
             </div>
             <div class="copyright">
@@ -904,12 +886,10 @@
     <div class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">↑</div>
 
     <script>
-        // Mobile Menu Toggle
         function toggleMenu() {
             document.getElementById('navMenu').classList.toggle('active');
         }
 
-        // Scroll to Top Function
         function scrollToTop() {
             window.scrollTo({
                 top: 0,
@@ -917,7 +897,6 @@
             });
         }
 
-        // Header scroll effect
         window.addEventListener('scroll', function() {
             const header = document.getElementById('header');
             const scrollToTopBtn = document.getElementById('scrollToTop');
@@ -931,7 +910,6 @@
             }
         });
 
-        // Counter Animation
         function animateCounters() {
             const counters = document.querySelectorAll('.counter');
             
@@ -954,7 +932,6 @@
             });
         }
 
-        // Intersection Observer for animations
         const observerOptions = {
             threshold: 0.2,
             rootMargin: '0px 0px -100px 0px'
@@ -965,7 +942,6 @@
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                     
-                    // Animate counters when stats section is visible
                     if (entry.target.querySelector('.stats')) {
                         animateCounters();
                     }
@@ -973,7 +949,6 @@
             });
         }, observerOptions);
 
-        // Observe all sections
         window.addEventListener('load', () => {
             const sections = document.querySelectorAll('section');
             sections.forEach(section => {
@@ -981,7 +956,6 @@
             });
         });
 
-        // Active navigation link on scroll
         window.addEventListener('scroll', function() {
             const sections = document.querySelectorAll('section');
             const navLinks = document.querySelectorAll('.nav-link');
@@ -1004,7 +978,6 @@
             });
         });
 
-        // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1023,13 +996,11 @@
                         behavior: 'smooth'
                     });
                     
-                    // Close mobile menu if open
                     document.getElementById('navMenu').classList.remove('active');
                 }
             });
         });
 
-        // Parallax effect for hero section
         window.addEventListener('scroll', function() {
             const hero = document.querySelector('.hero');
             const scrolled = window.pageYOffset;
@@ -1038,7 +1009,6 @@
             }
         });
 
-        // Add hover effect to initiative cards
         document.querySelectorAll('.initiative-card').forEach(card => {
             card.addEventListener('mouseenter', function() {
                 this.style.transform = 'translateY(-15px) scale(1.02)';
@@ -1049,7 +1019,6 @@
             });
         });
 
-        // Custom cursor effect (optional)
         document.addEventListener('mousemove', function(e) {
             const cards = document.querySelectorAll('.initiative-card, .stat-item');
             cards.forEach(card => {
