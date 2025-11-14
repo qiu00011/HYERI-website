@@ -344,6 +344,35 @@
         .initiatives {
             background-color: var(--bg-dark);
         }
+        
+        .vlog-section {
+            background-color: var(--bg-dark);
+        }
+
+        .vlog-wrapper {
+            max-width: 1100px;          /* 比正文略宽一点 */
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .vlog-video {
+            position: relative;
+            width: 100%;
+            margin: 0 auto 3rem auto;
+           /* 想要更高一点可以调这个比例，比如 56.25% = 16:9,  60%/65% 会更“高” */
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+ 
+        .vlog-video iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;    /* 占满 vlog-video 的宽度 */
+            height: 100%;   /* 占满 vlog-video 的高度 */
+        }
 
         .initiatives-grid {
             display: grid;
@@ -789,19 +818,21 @@
 
     <div class="divider"></div>
 
-    <section class="vlog-section" id="vlog">
+<section class="vlog-section" id="vlog">
     <div class="container">
         <div class="section-title">
             <h2>Vlog</h2>
             <p>Behind the scenes with Hyeri - her authentic moments shared just for us</p>
         </div>
-        <div class="vlog-container">
-            <div class="video-wrapper">
+
+        <div class="vlog-wrapper">
+            <div class="vlog-video">
                 <iframe
-                    src="https://www.youtube.com/watch?v=NxdihTEGAbY"
+                    src="https://www.youtube.com/embed/NxdihTEGAbY?start=7&autoplay=1&mute=1"
                     title="Hyeri MOVE FANCAM"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
                     allowfullscreen>
                 </iframe>
             </div>
@@ -1085,6 +1116,7 @@
     </script>
 </body>
 </html>
+
 
 
 
