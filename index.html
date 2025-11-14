@@ -6,7 +6,7 @@
     <title>HYERI - A Tribute by HYEROOMY</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -29,17 +29,26 @@
             font-family: 'Cormorant Garamond', serif;
             font-weight: 300;
             line-height: 1.8;
+            overflow-x: hidden;
         }
 
         header {
             background-color: rgba(0, 0, 0, 0.95);
             color: var(--primary);
             padding: 1.5rem 0;
-            position: sticky;
+            position: fixed;
             top: 0;
+            width: 100%;
             z-index: 100;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 1rem 0;
+            background-color: rgba(0, 0, 0, 0.98);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         .container {
@@ -59,6 +68,12 @@
             font-weight: 300;
             letter-spacing: 8px;
             text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            letter-spacing: 12px;
         }
 
         nav ul {
@@ -88,42 +103,68 @@
             transition: width 0.3s ease;
         }
 
-        nav ul li a:hover::after {
+        nav ul li a:hover::after,
+        nav ul li a.active::after {
             width: 100%;
         }
 
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
                         url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            height: 90vh;
+            height: 100vh;
             display: flex;
             align-items: center;
+            justify-content: center;
             text-align: center;
             color: var(--primary);
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
         }
 
         .hero-content {
             max-width: 900px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.5s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero h1 {
-            font-size: 6rem;
+            font-size: 7rem;
             margin-bottom: 2rem;
             font-weight: 300;
-            letter-spacing: 20px;
+            letter-spacing: 25px;
             text-transform: uppercase;
         }
 
         .hero p {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             margin-bottom: 3rem;
             font-weight: 300;
-            letter-spacing: 3px;
-            line-height: 2;
+            letter-spacing: 4px;
+            line-height: 2.2;
+            opacity: 0.9;
         }
 
         .btn {
@@ -138,16 +179,46 @@
             letter-spacing: 3px;
             text-transform: uppercase;
             font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary);
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 0;
         }
 
         .btn:hover {
-            background-color: var(--primary);
             color: var(--bg-dark);
         }
 
         section {
             padding: 8rem 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+            margin: 0 auto;
         }
 
         .section-title {
@@ -156,11 +227,11 @@
         }
 
         .section-title h2 {
-            font-size: 3.5rem;
+            font-size: 3rem;
             color: var(--primary);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             font-weight: 300;
-            letter-spacing: 8px;
+            letter-spacing: 10px;
             text-transform: uppercase;
         }
 
@@ -168,21 +239,39 @@
             color: var(--secondary);
             max-width: 700px;
             margin: 0 auto;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             letter-spacing: 2px;
             font-weight: 300;
+            line-height: 2;
         }
 
         .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 5rem;
+            gap: 6rem;
             align-items: center;
         }
 
         .about-img {
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            position: relative;
+        }
+
+        .about-img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .about-img:hover::after {
+            opacity: 1;
         }
 
         .about-img img {
@@ -190,7 +279,7 @@
             height: auto;
             display: block;
             filter: grayscale(100%) contrast(1.1);
-            transition: all 0.5s ease;
+            transition: all 0.7s ease;
         }
 
         .about-img:hover img {
@@ -199,18 +288,18 @@
         }
 
         .about-text h3 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
+            font-size: 2.2rem;
+            margin-bottom: 2.5rem;
             color: var(--primary);
             font-weight: 300;
-            letter-spacing: 4px;
+            letter-spacing: 5px;
             text-transform: uppercase;
         }
 
         .about-text p {
             margin-bottom: 2rem;
-            font-size: 1.15rem;
-            line-height: 2;
+            font-size: 1.1rem;
+            line-height: 2.2;
             color: var(--secondary);
             letter-spacing: 1px;
         }
@@ -218,63 +307,57 @@
         .stats {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 3rem;
-            margin-top: 6rem;
+            gap: 2rem;
+            margin-top: 7rem;
         }
 
         .stat-item {
             text-align: center;
-            padding: 3rem 2rem;
-            background-color: var(--bg-light);
+            padding: 3rem 1.5rem;
+            background-color: transparent;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            cursor: pointer;
         }
 
         .stat-item:hover {
-            background-color: var(--primary);
-            color: var(--bg-dark);
-            transform: translateY(-5px);
+            border-color: var(--primary);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
         }
 
         .stat-item h3 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             color: var(--primary);
             margin-bottom: 1rem;
             font-weight: 300;
-            letter-spacing: 3px;
-        }
-
-        .stat-item:hover h3 {
-            color: var(--bg-dark);
+            letter-spacing: 2px;
         }
 
         .stat-item p {
-            color: var(--secondary);
-            font-size: 1.1rem;
-            letter-spacing: 2px;
+            color: var(--accent);
+            font-size: 0.95rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
             font-weight: 300;
         }
 
-        .stat-item:hover p {
-            color: var(--bg-dark);
-        }
-
         .initiatives {
-            background-color: var(--bg-light);
+            background-color: var(--bg-dark);
         }
 
         .initiatives-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 3rem;
+            gap: 2rem;
         }
 
         .initiative-card {
-            background-color: var(--bg-dark);
+            background-color: transparent;
             border: 1px solid rgba(255, 255, 255, 0.1);
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            cursor: pointer;
         }
 
         .initiative-card:hover {
@@ -283,8 +366,19 @@
         }
 
         .initiative-img {
-            height: 300px;
+            height: 350px;
             overflow: hidden;
+            position: relative;
+        }
+
+        .initiative-img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
         }
 
         .initiative-img img {
@@ -292,7 +386,7 @@
             height: 100%;
             object-fit: cover;
             filter: grayscale(100%) contrast(1.1);
-            transition: all 0.5s ease;
+            transition: all 0.7s ease;
         }
 
         .initiative-card:hover .initiative-img img {
@@ -302,22 +396,23 @@
 
         .initiative-content {
             padding: 2.5rem;
+            text-align: center;
         }
 
         .initiative-content h3 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             margin-bottom: 1.5rem;
             color: var(--primary);
             font-weight: 300;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             text-transform: uppercase;
         }
 
         .initiative-content p {
             margin-bottom: 2rem;
-            line-height: 1.9;
+            line-height: 2;
             color: var(--secondary);
-            font-size: 1.05rem;
+            font-size: 1rem;
             letter-spacing: 1px;
         }
 
@@ -326,25 +421,23 @@
             color: var(--primary);
             text-align: center;
             padding: 10rem 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .cta h2 {
-            font-size: 4rem;
-            margin-bottom: 2rem;
+            font-size: 3.5rem;
+            margin-bottom: 2.5rem;
             font-weight: 300;
-            letter-spacing: 10px;
+            letter-spacing: 12px;
             text-transform: uppercase;
         }
 
         .cta p {
-            font-size: 1.3rem;
-            margin-bottom: 3rem;
-            max-width: 800px;
+            font-size: 1.2rem;
+            margin-bottom: 3.5rem;
+            max-width: 750px;
             margin-left: auto;
             margin-right: auto;
-            line-height: 2;
+            line-height: 2.2;
             color: var(--secondary);
             letter-spacing: 2px;
         }
@@ -352,21 +445,22 @@
         footer {
             background-color: var(--bg-dark);
             color: var(--primary);
-            padding: 5rem 0 2rem;
+            padding: 6rem 0 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
             gap: 4rem;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
         }
 
         .footer-column h3 {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             margin-bottom: 2rem;
             font-weight: 300;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             text-transform: uppercase;
             padding-bottom: 1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -394,28 +488,28 @@
             transition: all 0.3s ease;
             letter-spacing: 1px;
             font-size: 1.05rem;
+            display: inline-block;
         }
 
         .footer-links li a:hover {
             color: var(--primary);
-            padding-left: 10px;
+            transform: translateX(10px);
         }
 
         .social-links {
             display: flex;
             gap: 1.5rem;
-            margin-top: 1.5rem;
-            flex-wrap: wrap;
+            margin-top: 2rem;
         }
 
         .social-links a {
             color: var(--secondary);
             text-decoration: none;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 0.8rem;
-            width: 50px;
-            height: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 1rem;
+            width: 55px;
+            height: 55px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -424,7 +518,7 @@
         .social-links a:hover {
             color: var(--primary);
             border-color: var(--primary);
-            transform: translateY(-5px);
+            transform: translateY(-5px) rotate(5deg);
         }
 
         .social-links svg {
@@ -433,13 +527,41 @@
             fill: currentColor;
         }
 
+        .contact-info {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+        }
+
+        .contact-info p {
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            color: var(--accent);
+            margin-bottom: 0.8rem;
+            line-height: 1.8;
+        }
+
+        .contact-info .platform {
+            color: var(--secondary);
+            font-weight: 400;
+        }
+
+        .contact-info a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            color: var(--primary);
+        }
+
         .copyright {
             text-align: center;
             padding-top: 3rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--accent);
             letter-spacing: 2px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .mobile-menu {
@@ -449,17 +571,51 @@
             letter-spacing: 2px;
         }
 
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+            font-size: 1.5rem;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            background-color: var(--primary);
+            color: var(--bg-dark);
+            transform: translateY(-5px);
+        }
+
         @media (max-width: 992px) {
             .about-content {
                 grid-template-columns: 1fr;
+                gap: 4rem;
             }
             
             .initiatives-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
+                gap: 3rem;
             }
             
             .footer-content {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
+                gap: 3rem;
             }
             
             .stats {
@@ -470,6 +626,11 @@
                 font-size: 4rem;
                 letter-spacing: 15px;
             }
+
+            .section-title h2 {
+                font-size: 2.5rem;
+                letter-spacing: 8px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -479,7 +640,7 @@
             }
             
             .hero p {
-                font-size: 1.1rem;
+                font-size: 1rem;
                 letter-spacing: 2px;
             }
             
@@ -509,25 +670,17 @@
                 display: block;
             }
             
-            .initiatives-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-            
             .stats {
                 grid-template-columns: 1fr;
             }
 
             .section-title h2 {
-                font-size: 2.5rem;
+                font-size: 2rem;
                 letter-spacing: 5px;
             }
 
             .cta h2 {
-                font-size: 2.5rem;
+                font-size: 2rem;
                 letter-spacing: 5px;
             }
 
@@ -548,20 +701,37 @@
             background-color: var(--primary);
             color: var(--bg-dark);
         }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
     </style>
 </head>
 <body>
-    <header>
+    <header id="header">
         <div class="container nav-container">
-            <div class="logo">HYERI</div>
+            <div class="logo" onclick="scrollToTop()">HYERI</div>
             <nav>
                 <div class="mobile-menu" onclick="toggleMenu()">MENU</div>
                 <ul id="navMenu">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#vlog">Vlog</a></li>
-                    <li><a href="#story">Story</a></li>
-                    <li><a href="#hyeroomy">Hyeroomy</a></li>
-                    <li><a href="#follow-hyeri">Follow HYERI</a></li>
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#story" class="nav-link">Story</a></li>
+                    <li><a href="#vlog" class="nav-link">Vlog</a></li>
+                    <li><a href="#hyeroomy" class="nav-link">Hyeroomy</a></li>
+                    <li><a href="#follow-hyeri" class="nav-link">Follow HYERI</a></li>
                 </ul>
             </nav>
         </div>
@@ -573,9 +743,11 @@
             <p>Lee Hye-ri<br>
             혜리<br>
             Made with love by a HYEROOMY</p>
-            <a href="#story" class="btn">Discover More</a>
+            <a href="#story" class="btn">Explore</a>
         </div>
     </section>
+
+    <div class="divider"></div>
 
     <section id="story">
         <div class="container">
@@ -610,11 +782,13 @@
                 </div>
                 <div class="stat-item">
                     <h3><span class="counter" data-target="12">0</span></h3>
-                    <p>Well-Deserved Awards</p>
+                    <p>Awards</p>
                 </div>
             </div>
         </div>
     </section>
+
+    <div class="divider"></div>
 
     <section class="initiatives" id="vlog">
         <div class="container">
@@ -629,7 +803,7 @@
                     </div>
                     <div class="initiative-content">
                         <h3>Friendly Rivalry</h3>
-                        <p>Her 2025 comeback that blew everyone away. Watching her as Yoo Jae Yi in this mystery thriller reminded us why we fell for her talent in the first place. The show broke records and our hearts.</p>
+                        <p>Her 2025 comeback that blew everyone away. Watching her as Yoo Jae Yi in this mystery thriller reminded us why we fell for her talent in the first place.</p>
                         <a href="#" class="btn">More</a>
                     </div>
                 </div>
@@ -639,7 +813,7 @@
                     </div>
                     <div class="initiative-content">
                         <h3>Reply 1988</h3>
-                        <p>The drama that changed everything. Deok-sun will forever live in our hearts. We laughed, cried, and felt every emotion alongside her. This is where many of us became HYEROOMY.</p>
+                        <p>The drama that changed everything. Deok-sun will forever live in our hearts. This is where many of us became HYEROOMY.</p>
                         <a href="#" class="btn">More</a>
                     </div>
                 </div>
@@ -649,13 +823,15 @@
                     </div>
                     <div class="initiative-content">
                         <h3>Girl's Day Forever</h3>
-                        <p>15 years together and counting. The 2025 reunion had us all emotional. Seeing her with Sojin, Yura, and Minah reminded us of where it all began. Girl's Day will always be in our hearts.</p>
+                        <p>15 years together and counting. The 2025 reunion had us all emotional. Girl's Day will always be in our hearts.</p>
                         <a href="#" class="btn">More</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <div class="divider"></div>
 
     <section class="cta" id="hyeroomy">
         <div class="container">
@@ -669,7 +845,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
-                    <h3>About This Site</h3>
+                    <h3>About</h3>
                     <p>This is a fan-made tribute to Hyeri, created by a fellow HYEROOMY with lots of love and admiration. Not affiliated with Sublime Artist Agency.</p>
                     <p>Just a fan celebrating an incredible artist.</p>
                     <div class="social-links">
@@ -694,28 +870,28 @@
                     <h3>Navigation</h3>
                     <ul class="footer-links">
                         <li><a href="#home">Home</a></li>
-                        <li><a href="#vlog">Vlog</a></li>
                         <li><a href="#story">Her Story</a></li>
+                        <li><a href="#vlog">Vlog</a></li>
                         <li><a href="#hyeroomy">HYEROOMY</a></li>
-                        <li><a href="#follow-hyeri">Follow Her</a></li>
+                        <li><a href="#follow-hyeri">Follow</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Must Watch</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Friendly Rivalry 2025</a></li>
+                        <li><a href="#">Friendly Rivalry</a></li>
                         <li><a href="#">Reply 1988</a></li>
                         <li><a href="#">Dream High 2</a></li>
                         <li><a href="#">Hyde Jekyll Me</a></li>
-                        <li><a href="#">Girl's Day Music</a></li>
+                        <li><a href="#">Girl's Day</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
+                <div class="footer-column contact-info">
                     <h3>Connect</h3>
-                    <p>Follow her on social media</p>
-                    <p>YouTube: IamLeeHyeri</p>
-                    <p>Instagram: hyeri_0609</p>
-                    <p>X: hyeriherihey</p>
+                    <p><span class="platform">YouTube:</span> IamLeeHyeri</p>
+                    <p><span class="platform">Instagram:</span> hyeri_0609</p>
+                    <p><span class="platform">X:</span> hyeriherihey</p>
+                    <p><span class="platform">Email:</span> <a href="mailto:love@hyeri.top">love@hyeri.top</a></p>
                 </div>
             </div>
             <div class="copyright">
@@ -725,11 +901,37 @@
         </div>
     </footer>
 
+    <div class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">↑</div>
+
     <script>
+        // Mobile Menu Toggle
         function toggleMenu() {
             document.getElementById('navMenu').classList.toggle('active');
         }
 
+        // Scroll to Top Function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+            
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                header.classList.remove('scrolled');
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        // Counter Animation
         function animateCounters() {
             const counters = document.querySelectorAll('.counter');
             
@@ -752,26 +954,57 @@
             });
         }
 
+        // Intersection Observer for animations
         const observerOptions = {
-            threshold: 0.5
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    animateCounters();
-                    observer.unobserve(entry.target);
+                    entry.target.classList.add('visible');
+                    
+                    // Animate counters when stats section is visible
+                    if (entry.target.querySelector('.stats')) {
+                        animateCounters();
+                    }
                 }
             });
         }, observerOptions);
 
+        // Observe all sections
         window.addEventListener('load', () => {
-            const statsSection = document.querySelector('.stats');
-            if (statsSection) {
-                observer.observe(statsSection);
-            }
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                observer.observe(section);
+            });
         });
 
+        // Active navigation link on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -790,7 +1023,49 @@
                         behavior: 'smooth'
                     });
                     
+                    // Close mobile menu if open
                     document.getElementById('navMenu').classList.remove('active');
+                }
+            });
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', function() {
+            const hero = document.querySelector('.hero');
+            const scrolled = window.pageYOffset;
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Add hover effect to initiative cards
+        document.querySelectorAll('.initiative-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Custom cursor effect (optional)
+        document.addEventListener('mousemove', function(e) {
+            const cards = document.querySelectorAll('.initiative-card, .stat-item');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = (y - centerY) / 20;
+                    const rotateY = (centerX - x) / 20;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+                } else {
+                    card.style.transform = '';
                 }
             });
         });
