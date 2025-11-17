@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HYERI Gallery - HYERI</title>
+<link rel="icon" href="icon/icon.png" type="image/png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body {
+    background-color: #000;
+    color: #fff;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+  header {
+    background-color: rgba(0,0,0,0.95);
+    color: #fff;
+    padding: 1.5rem 0;
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+  }
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .back-btn {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 300;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    border: 1px solid #fff;
+    padding: 0.5rem 1.5rem;
+  }
+  .back-btn:hover {
+    background-color: #fff;
+    color: #000;
+  }
+  .gallery-section {
+    padding: 10rem 0 5rem 0;
+    min-height: 100vh;
+  }
+  .section-title {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  .section-title h1 {
+    font-size: 3.5rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 12px;
+    text-transform: uppercase;
+  }
+  .section-title p {
+    color: #ccc;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+  }
+  .loading {
+    text-align: center;
+    color: #ccc;
+    font-size: 1.5rem;
+    padding: 3rem;
+    letter-spacing: 3px;
+  }
+  .slider-container {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.15);
+    background-color: rgba(0,0,0,0.5);
+  }
+  .slider-track {
+    display: flex;
+    transition: transform 0.8s cubic-bezier(0.7,0,0.3,1);
+    will-change: transform;
+  }
+  .slider-track img {
+    width: 100%;
+    flex-shrink: 0;
+    object-fit: cover;
+    display: block;
+  }
+  .slider-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .slider-btn {
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 0.8rem 2rem;
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+  }
+  .slider-btn:hover {
+    background-color: #fff;
+    color: #000;
+  }
+  .slider-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  .slider-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .dot.active {
+    background-color: #fff;
+    transform: scale(1.2);
+  }
+  /* 瀑布流区域 */
+  .masonry-section {
+    margin-top: 6rem;
+  }
+  .masonry-grid {
+    column-count: 5;
+    column-gap: 1.2rem;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  @media (max-width:1200px) { .masonry-grid { column-count: 4; } }
+  @media (max-width:992px) { .masonry-grid { column-count: 3; } }
+  @media (max-width:768px) { .masonry-grid { column-count: 2; padding: 0 10px; } }
+  @media (max-width:480px) { .masonry-grid { column-count: 1; padding: 0 5px; } }
+  .masonry-item {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 1.2rem;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    position: relative;
+    transform-style: preserve-3d;
+  }
+  .masonry-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: blur(20px);
+    transition: filter 1.2s ease, transform 0.3s ease;
+    will-change: filter;
+    backface-visibility: hidden;
+  }
+  .masonry-item img.loaded {
+    filter: blur(0);
+  }
+  .masonry-item:hover img {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(255,255,255,0.3);
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav-container">
+    <div class="logo" onclick="window.location.href='index.html'">HYERI</div>
+    <a href="index.html" class="back-btn">Back</a>
+  </div>
+</header>
+<section class="gallery-section">
+  <div class="container">
+    <div class="section-title">
+      <h1>HYERI Gallery</h1>
+      <p>Beautiful moments captured with HYERI</p>
+    </div>
+    <div class="loading" id="loading">Loading images...</div>
+    <div class="slider-container" style="display:none;" id="sliderContainer">
+      <div class="slider-track" id="sliderTrack"></div>
+    </div>
+    <div class="slider-controls" style="display:none;" id="sliderControls">
+      <button class="slider-btn" id="prevBtn">Previous</button>
+      <button class="slider-btn" id="playPauseBtn">Pause</button>
+      <button class="slider-btn" id="nextBtn">Next</button>
+    </div>
+    <div class="slider-dots" id="sliderDots"></div>
+    <!-- 新增瀑布流展示区 -->
+    <section class="masonry-section">
+      <div class="section-title">
+        <h1>Lee Hyeri Album</h1>
+        <p>Special moments and memories</p>
+      </div>
+      <div class="loading" id="masonryLoading">Loading album...</div>
+      <div class="masonry-grid" id="masonryGrid"></div>
+      <div class="load-more" id="loadMore" style="display:none;">Scroll for more...</div>
+    </section>
+  </div>
+</section>
+<script>
+const API_URL = 'https://api.hyeri.us.kg'; // 轮播图API
+const FOLDER_KEY = '/hyerigallery/'; // 轮播文件夹
+
+const MASONRY_API_URL = 'https://api.hyeri.us.kg'; // 瀑布流API
+const MASONRY_FOLDER = '/leehyeri/'; // 瀑布流文件夹
+
+const BATCH_SIZE = 20;
+
+let currentIndex = 0;
+let autoPlayInterval;
+let isPlaying = true;
+let slides = [];
+let track, prevBtn, nextBtn, playPauseBtn, dotsContainer, dots;
+let loading, sliderContainer, sliderControls;
+
+let allImages = [];
+let loadedCount = 0;
+let masonryLoading, masonryGrid, loadMore;
+
+function initDOM() {
+  track = document.getElementById('sliderTrack');
+  prevBtn = document.getElementById('prevBtn');
+  nextBtn = document.getElementById('nextBtn');
+  playPauseBtn = document.getElementById('playPauseBtn');
+  dotsContainer = document.getElementById('sliderDots');
+  loading = document.getElementById('loading');
+  sliderContainer = document.getElementById('sliderContainer');
+  sliderControls = document.getElementById('sliderControls');
+
+  masonryLoading = document.getElementById('masonryLoading');
+  masonryGrid = document.getElementById('masonryGrid');
+  loadMore = document.getElementById('loadMore');
+}
+
+async function loadImages() {
+  try {
+    const response = await fetch(API_URL);
+    const data = await response.json();
+    if (!data.success || !data.images || data.images.length === 0) {
+      loading.textContent = 'No images found';
+      return;
+    }
+    const filteredImages = data.images.filter(url => url.includes(FOLDER_KEY));
+    if (filteredImages.length === 0) {
+      loading.textContent = 'No images found in folder';
+      return;
+    }
+    loading.style.display = 'none';
+    sliderContainer.style.display = 'block';
+    sliderControls.style.display = 'flex';
+    filteredImages.forEach((url, index) => {
+      const img = document.createElement('img');
+      img.src = url;
+      img.alt = '';
+      img.loading = index === 0 ? 'eager' : 'lazy';
+      track.appendChild(img);
+    });
+    const firstImgClone = document.createElement('img');
+    firstImgClone.src = filteredImages[0];
+    firstImgClone.alt = '';
+    track.appendChild(firstImgClone);
+    slides = document.querySelectorAll('.slider-track img');
+    createDots();
+    initSlider();
+  } catch (error) {
+    loading.textContent = 'Failed to load images';
+  }
+}
+
+async function loadMasonryImages() {
+  try {
+    const response = await fetch(MASONRY_API_URL);
+    const data = await response.json();
+    if (!data.success || !data.images || data.images.length === 0) {
+      masonryLoading.textContent = 'No images found';
+      return;
+    }
+    allImages = data.images.filter(url => url.includes(MASONRY_FOLDER));
+    if (allImages.length === 0) {
+      masonryLoading.textContent = 'No images found in folder';
+      return;
+    }
+    masonryLoading.style.display = 'none';
+    loadMore.style.display = 'block';
+    loadMore.textContent = 'Scroll for more...';
+    loadMoreImages();
+  } catch (error) {
+    masonryLoading.textContent = 'Failed to load images';
+    console.error(error);
+  }
+}
+
+function loadMoreImages() {
+  if (loadedCount >= allImages.length) {
+    loadMore.textContent = 'No more images';
+    return;
+  }
+  const nextBatch = allImages.slice(loadedCount, loadedCount + BATCH_SIZE);
+  nextBatch.forEach(url => {
+    const div = document.createElement('div');
+    div.className = 'masonry-item';
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = '';
+    img.loading = 'lazy';
+    img.onload = () => { img.classList.add('loaded'); };
+    div.appendChild(img);
+    masonryGrid.appendChild(div);
+  });
+  loadedCount += nextBatch.length;
+}
+
+function createDots() {
+  dotsContainer.innerHTML = '';
+  const realSlideCount = slides.length - 1;
+  if (realSlideCount > 30) {
+    dotsContainer.style.display = 'none';
+    return;
+  }
+  for (let i = 0; i < realSlideCount; i++) {
+    const dot = document.createElement('div');
+    dot.classList.add('dot');
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+  }
+  dots = document.querySelectorAll('.dot');
+}
+
+function initSlider() {
+  if (slides.length === 0) return;
+  prevBtn.addEventListener('click', () => {
+    prevSlide();
+    if (isPlaying) {
+      stopAutoPlay();
+      startAutoPlay();
+    }
+  });
+  nextBtn.addEventListener('click', () => {
+    nextSlide();
+    if (isPlaying) {
+      stopAutoPlay();
+      startAutoPlay();
+    }
+  });
+  playPauseBtn.addEventListener('click', () => {
+    if (isPlaying) stopAutoPlay();
+    else startAutoPlay();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') prevSlide();
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === ' ') {
+      e.preventDefault();
+      if (isPlaying) stopAutoPlay();
+      else startAutoPlay();
+    }
+  });
+  startAutoPlay();
+}
+
+function updateSlide() {
+  const offset = -currentIndex * 100;
+  track.style.transform = `translateX(${offset}%)`;
+  if (dots && dots.length > 0) {
+    const activeIndex = currentIndex === slides.length - 1 ? 0 : currentIndex;
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === activeIndex);
+    });
+  }
+}
+
+function goToSlide(index) {
+  currentIndex = index;
+  updateSlide();
+}
+
+function nextSlide() {
+  currentIndex++;
+  track.style.transition = 'transform 0.8s cubic-bezier(0.7,0,0.3,1)';
+  updateSlide();
+  if (currentIndex === slides.length - 1) {
+    setTimeout(() => {
+      track.style.transition = 'none';
+      currentIndex = 0;
+      updateSlide();
+    }, 800);
+  }
+}
+
+function prevSlide() {
+  if (currentIndex === 0) {
+    track.style.transition = 'none';
+    currentIndex = slides.length - 1;
+    updateSlide();
+    setTimeout(() => {
+      track.style.transition = 'transform 0.8s cubic-bezier(0.7,0,0.3,1)';
+      currentIndex--;
+      updateSlide();
+    }, 20);
+  } else {
+    currentIndex--;
+    updateSlide();
+  }
+}
+
+function startAutoPlay() {
+  autoPlayInterval = setInterval(nextSlide, 3000);
+  isPlaying = true;
+  playPauseBtn.textContent = 'Pause';
+}
+
+function stopAutoPlay() {
+  clearInterval(autoPlayInterval);
+  isPlaying = false;
+  playPauseBtn.textContent = 'Play';
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  initDOM();
+  loadImages();
+  loadMasonryImages();
+});
+</script>
+</body>
+</html>
