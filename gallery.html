@@ -353,7 +353,7 @@ window.addEventListener('scroll', () => {
   const fullHeight = document.documentElement.scrollHeight;
 
   // 当页面滚动到底部一定范围内时，调用加载更多的函数
-  if (scrollTop + windowHeight >= fullHeight - 50) { // 50像素阈值可调节
+  if (scrollTop + windowHeight >= fullHeight - 300) { // 50像素阈值可调节
     loadMoreImages();
   }
 });
@@ -472,3 +472,4 @@ window.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
