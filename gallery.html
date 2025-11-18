@@ -346,6 +346,18 @@ function loadMoreImages() {
   loadedCount += nextBatch.length;
 }
 
+window.addEventListener('scroll', () => {
+  // 计算页面滚动到底部的条件
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+  const fullHeight = document.documentElement.scrollHeight;
+
+  // 当页面滚动到底部一定范围内时，调用加载更多的函数
+  if (scrollTop + windowHeight >= fullHeight - 50) { // 50像素阈值可调节
+    loadMoreImages();
+  }
+});
+
 function createDots() {
   dotsContainer.innerHTML = '';
   const realSlideCount = slides.length - 1;
